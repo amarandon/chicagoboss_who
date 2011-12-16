@@ -22,7 +22,7 @@ signup('POST', []) ->
         HashedPassword),
     Resp = case {Errors, Account:save()} of 
         {[], {ok, SavedAccount}} ->
-            {redirect, "/account/login"};
+            {redirect, [{controller, "account"}, {action, "login"}]};
         {_, {ok, SavedAccount}} ->
             {ok, [{errors, Errors}, {account, Account}]};
         {_, {error, ModelErrors}} ->
