@@ -1,4 +1,5 @@
--module(account, [Id, Username, Email, HashedPassword]).
+-module(account, [Id, Username, Email, HashedPassword, Activated, ActivationToken,
+        ActivationTokenCreationTime]).
 -compile(export_all).
 
 validation_tests() ->
