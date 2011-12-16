@@ -1,0 +1,8 @@
+{application, cb_who, [
+        {description, "Authentication app for Chicago Boss web framework"},
+        {vsn, "0.0.1"},
+        {modules, []},
+        {registered, []},
+        {applications, [kernel, stdlib, crypto, boss]},
+        {env, []}
+    ]}.

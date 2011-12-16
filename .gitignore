@@ -1,0 +1,4 @@
+*.beam
+*.swp
+log
+ebin/cb_who.app

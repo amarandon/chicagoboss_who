@@ -1,0 +1,42 @@
+{% extends 'layout.html' %}
+
+{% block title %}Signup{% endblock %}
+
+{% block body_title %}Signup{% endblock %}
+
+{% block content %}
+
+{% if errors %}
+  <ul>
+  {% for error in errors %}
+  <li class="error">{{ error }}</li>
+  {% endfor %}
+  </ul>
+{% endif %}
+
+<form name="signup-form" class="signup-form" method="post"
+  action="/account/signup">
+  <fieldset>
+    <legend>Signup form</legend>
+    <p>
+      <label for="email">Enter your email address</label>
+      <input id="email" name="email" value="{% if account.email %}{{ account.email }}{% endif %}">
+    </p>
+    <p>
+      <label for="username">Choose a username</label>
+      <input id="username" name="username" value="{% if account.username %}{{ account.username }}{% endif %}">
+    </p>
+    <p>
+      <label for="password">Choose a password</label>
+      <input id="password" name="password">
+    </p>
+    <p>
+      <label for="password-confirm">Type the same password again</label>
+      <input id="password-confirm" name="password-confirm">
+    </p>
+    <p>
+      <input type="submit" value="Signup">
+    </p>
+  </fieldset>
+</form>
+{% endblock %}
