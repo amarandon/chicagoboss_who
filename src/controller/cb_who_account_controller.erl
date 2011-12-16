@@ -1,6 +1,6 @@
 -module(cb_who_account_controller, [Req, SessionID]).
 -compile(export_all).
--default_action(signin).
+-default_action(login).
 
 signup('GET', []) ->
     {ok, []};
@@ -22,7 +22,7 @@ signup('POST', []) ->
         HashedPassword),
     Resp = case {Errors, Account:save()} of 
         {[], {ok, SavedAccount}} ->
-            {redirect, "/account/signin"};
+            {redirect, "/account/login"};
         {_, {ok, SavedAccount}} ->
             {ok, [{errors, Errors}, {account, Account}]};
         {_, {error, ModelErrors}} ->
@@ -30,10 +30,10 @@ signup('POST', []) ->
     end,
     Resp.
 
-signin('GET', []) ->
+login('GET', []) ->
     {ok, []};
 
-signin('POST', []) ->
+login('POST', []) ->
     Username = Req:post_param("username"),
     Password = Req:post_param("password"),
     MatchingAccounts = boss_db:find(account, [username = Username, hashed_password = Password]),
@@ -42,14 +42,18 @@ signin('POST', []) ->
             {ok, [{error, "Invalid password"}]};
         [Account|_] ->
             boss_session:set_session_data(SessionID, username, Username),
-            {redirect, "/"}
+            {redirect, login_redirect()}
     end.
 
-signout('GET', []) ->
+logout('GET', []) ->
     boss_session:remove_session_data(SessionID, username),
-    {redirect, "/"}.
+    {redirect, login_redirect()}.
 
 % Internal functions
+login_redirect() ->
+    boss_env:get_env(cb_who, login_redirect, "/").
+
+
 check_password_confirmation(Req) ->
     Req:post_param("password") =:= Req:post_param("password-confirm").
 

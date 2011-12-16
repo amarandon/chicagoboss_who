@@ -11,3 +11,7 @@
 
 % 404 File Not Found handler
 % {404, {"hello", "goodbye"}}.
+
+{"/login", {"account", "login"}}.
+{"/signup", {"account", "signup"}}.
+{"/logout", {"account", "logout"}}.
