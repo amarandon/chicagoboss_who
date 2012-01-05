@@ -85,8 +85,8 @@ confirm_account_creation(Account) ->
         true ->
             {redirect, [{controller, "account"}, {action, "login"}]};
         false ->
+            boss_mail:send_template(cb_who, confirmation, [Account]),
             {render_other, [{controller, "account"}, 
                             {action, "confirmation_sent"}],
                            [{email, Account:email()}]}
     end.
-
